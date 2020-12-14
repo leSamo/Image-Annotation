@@ -1,0 +1,19 @@
+{
+    "name": "image-annotation",
+    "version": "0.1.0",
+    "engines": {
+        "node": "12.18.4"
+    },
+    "private": true,
+    "description": "Image annotation app",
+    "main": "app.js",
+    "scripts": {
+        "start": "nodemon ./app.js -e js,html,css,json"
+    },
+    "dependencies": {
+        "body-parser": "^1.19.0",
+        "express": "~4.16.1",
+        "googleapis": "^39.2.0",
+        "nodemon": "^2.0.6"
+    }
+}
