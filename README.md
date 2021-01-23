@@ -53,15 +53,13 @@ FIT VUT IP1 project 2020/21
         - `name` - text name for a category
         - `id` - category id, which displays in annotation output JSON file
         - `shape` - shape of bounding box, currently supported are `rectangle` (drag a rectangle around object), `ellipse` (drag an ellipse around object), `polygon` (click to create vertices), `point` (click to create a point) and `line` (drag a line)
-        - `img_src` - (optional) path to image icon for image type
+        - `img_src` - (optional) path to image to be used as icon
 
 
-## Browser compatibility
-| Commit  | Chrome | Firefox | Edge  |
-| ------- |:------:|:-------:|:-----:|
-| eb84a48 | ✅ | ✅ | ✅ |
-| 8023c3d | ✅ | ✅ | ✅ |
-| 06265ca | ✅ | ✅ | ✅ |
+## Compatible browsers
+- Chrome 
+- Firefox
+- Edge
 
 
 ## Used libraries

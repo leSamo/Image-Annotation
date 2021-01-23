@@ -1,10 +1,13 @@
+// For setting up token follow Google Drive API documentation: https://developers.google.com/drive/api/v3/quickstart/nodejs
+
 const fs = require('fs');
 const readline = require('readline');
 const { google } = require('googleapis');
 
-// If modifying these scopes, delete token.json, new one will be created upon running npm start and authentificating.
+// if modifying these scopes, delete token.json, new one will be created upon running npm start and authentificating
 const SCOPES = ['https://www.googleapis.com/auth/drive'];
 
+// path to file with Google API auth token
 const TOKEN_PATH = 'drive/token.json';
 
 function authAndDownload(whenDone, folderId) {
@@ -50,7 +53,7 @@ function getAccessToken(oAuth2Client, callback) {
         oAuth2Client.getToken(code, (err, token) => {
             if (err) return console.error('Error retrieving access token', err);
             oAuth2Client.setCredentials(token);
-            // Store the token to disk for later program executions
+            // store the token on disk for later program executions
             fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
                 if (err) return console.error(err);
                 console.log('Token stored to', TOKEN_PATH);
@@ -74,6 +77,7 @@ function sharedFolderListFiles(auth, whenDone, folderId) {
             return;
         }
 
+        // find only images which have not already been annotated (don't have .json file with same basename)
         const fileList = res.data.files;
         const itemList = fileList.reduce((acc, item, index) => {
             const baseName = item.name.split('.')[0];

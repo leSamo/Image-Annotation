@@ -1,11 +1,11 @@
 {
     "name": "image-annotation",
-    "version": "0.1.0",
+    "version": "1.0.0",
     "engines": {
-        "node": "12.18.4"
+        "node": "14.15.4"
     },
     "private": true,
-    "description": "Image annotation app",
+    "description": "Tool for annotating images for machine learning",
     "main": "app.js",
     "scripts": {
         "start": "nodemon ./app.js -e js,html,css,json"
@@ -15,5 +15,12 @@
         "express": "~4.16.1",
         "googleapis": "^39.2.0",
         "nodemon": "^2.0.7"
+    },
+    "homepage": "https://github.com/leSamo/Image-Annotation#readme",
+    "license": "MIT",
+    "author": {
+        "name": "Samuel Oleksak",
+        "email": "samuel.oleksak@gmail.com",
+        "url": "https://github.com/leSamo/"
     }
 }

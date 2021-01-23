@@ -20,12 +20,12 @@ const promptNewFolder = () => {
     }
 }
 
-let folderId, labels, imageName, selectedCategory, categories, hideAnnotations, currentZoom = 1,
+let imageName, selectedCategory, categories, hideAnnotations, currentZoom = 1,
     selectedHistory = null;
 
 // if folder ID cookie is present use it, else prompt user for it
-folderId = getCookieValue("folderId");
-labels = getCookieValue("labels");
+let folderId = getCookieValue("folderId");
+let labels = getCookieValue("labels");
 
 if (labels && labels !== "null") {
     setupLabels(labels);
