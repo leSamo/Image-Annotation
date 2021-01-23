@@ -1,5 +1,5 @@
 // ZOOM OPTIONS
-const ZOOM_SENSITIVITY = 10;
+const ZOOM_SENSITIVITY = 0.1;
 const ZOOM_MAX = 5;
 const ZOOM_MIN = 0.2;
 

@@ -83,7 +83,7 @@
 
     /* RENDERER IMPLEMENTATION */
     const container = document.getElementById("container");
-    const instance = renderer({ minScale: ZOOM_MIN, maxScale: ZOOM_MAX, element: container.children[0], scaleSensitivity: ZOOM_SENSITIVITY });
+    const instance = renderer({ minScale: ZOOM_MIN, maxScale: ZOOM_MAX, element: container.children[0], scaleSensitivity: 1.0 / ZOOM_SENSITIVITY });
 
     // center image on start
     instance.panBy({
