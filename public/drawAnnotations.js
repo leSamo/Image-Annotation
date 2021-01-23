@@ -374,7 +374,7 @@ const initDraw = canvas => {
     }
 
     // if user is dragging a new line refresh its position on every move
-    function moveLineElement(element, offsetX, offsetY, length, angle) {
+    function moveLineElement(element, offsetX, offsetY, length, angle, color) {
         element.style =
             `position: absolute;
              transform: rotate(${angle}rad);
@@ -382,7 +382,7 @@ const initDraw = canvas => {
              height: 0px;
              top: ${offsetY}px;
              left: ${offsetX}px;
-             border: 5px solid red;`
+             border: 5px solid ${color};`
     }
 
     // calculate line between points [x1, y1] and [x2, y2]
@@ -401,7 +401,7 @@ const initDraw = canvas => {
 
         const angle = Math.PI - Math.atan2(-deltaY, deltaX);
 
-        return element ? moveLineElement(element, offsetX, offsetY, length, angle) : createLineElement(offsetX, offsetY, length, angle, color, className);
+        return element ? moveLineElement(element, offsetX, offsetY, length, angle, color) : createLineElement(offsetX, offsetY, length, angle, color, className);
     }
 
     // create miniature and adjust its size to current zoom
