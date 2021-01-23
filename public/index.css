@@ -7,7 +7,7 @@ body {
 }
 
 
-/* Working area (center of the page)  */
+/* Working area (center of the page) */
 
 #container {
     height: 100%;
@@ -41,6 +41,17 @@ body {
     position: absolute;
     border: var(--annotation-border-width) solid red;
     border-radius: 100%;
+}
+
+
+/* Button to end polygon annotation */
+
+#polygon-button {
+    position: absolute;
+    height: 50px;
+    width: 50px;
+    background-color: orange;
+    z-index: 10;
 }
 
 
@@ -81,8 +92,8 @@ body {
     color: #383838;
     cursor: pointer;
     user-select: none;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     float: left;
+    font-family: inherit;
 }
 
 #submit-btn {
@@ -97,7 +108,7 @@ body {
     cursor: pointer;
     user-select: none;
     float: right;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: inherit;
 }
 
 #submit-btn:hover {
@@ -140,7 +151,7 @@ body {
     left: 200px;
     padding: 3px;
     background-color: orange;
-    z-index: 150;
+    z-index: 20;
 }
 
 #status:empty {
@@ -183,14 +194,6 @@ body {
 .toolbar-img {
     width: 35px;
     height: 35px;
-}
-
-#polygon-button {
-    position: absolute;
-    height: 50px;
-    width: 50px;
-    background-color: orange;
-    z-index: 10;
 }
 
 

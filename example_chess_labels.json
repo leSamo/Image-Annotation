@@ -78,31 +78,6 @@
             "id": "chess_board",
             "shape": "polygon",
             "img_src": "https://i.imgur.com/4noGIGE.png"
-        },
-        {
-            "name": "Point",
-            "id": "point",
-            "shape": "point"
-        },
-        {
-            "name": "Line",
-            "id": "line",
-            "shape": "line"
-        },
-        {
-            "name": "Rectangle",
-            "id": "rectangle",
-            "shape": "rectangle"
-        },
-        {
-            "name": "Polygon",
-            "id": "polygon",
-            "shape": "polygon"
-        },
-        {
-            "name": "Ellipse",
-            "id": "ellipse",
-            "shape": "ellipse"
         }
     ]
 }

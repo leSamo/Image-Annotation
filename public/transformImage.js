@@ -54,9 +54,11 @@
             $(".ellipse").css("border-width", ANNOTATION_BORDER_WIDTH / newScale);
             $(".point").css("border-width", ANNOTATION_BORDER_WIDTH / newScale);
 
-            // adjust miniature size when zooming
+            // adjust miniature image size when zooming
             $(".miniature").css("width", 32 / newScale);
             $(".miniature").css("right", (-32 - ANNOTATION_BORDER_WIDTH) / newScale);
+
+            // adjust miniature label size when zooming
             $(".miniature-label").css("font-size", Math.min(1 / newScale, 3) + "rem");
             $(".miniature-label").css("top", -ANNOTATION_BORDER_WIDTH / newScale - parseInt($(".miniature-label").parent().not(".deleted").find(".miniature-label").css("height")));
 
@@ -81,7 +83,7 @@
         return Object.assign({}, canZoom(state), canPan(state));
     };
 
-    /* RENDERER IMPLEMENTATION */
+    /* RENDERER INSTANCE */
     const container = document.getElementById("container");
     const instance = renderer({ minScale: ZOOM_MIN, maxScale: ZOOM_MAX, element: container.children[0], scaleSensitivity: 1.0 / ZOOM_SENSITIVITY });
 
@@ -91,6 +93,9 @@
         originY: 60
     });
 
+    /* HANDLE MOUSE EVENTS */
+
+    // zoom on mouse wheel scroll
     container.addEventListener("wheel", (event) => {
         event.preventDefault();
         instance.zoom({
@@ -99,13 +104,8 @@
             y: event.pageY
         });
     });
-    container.addEventListener("dblclick", () => {
-        instance.panTo({
-            originX: 200,
-            originY: 60,
-            scale: 1,
-        });
-    });
+
+    // pan image on mouse drag, change cursor to move variant
     container.addEventListener("mousemove", (event) => {
         event.preventDefault();
         if (event.buttons !== PAN_MOUSE_BUTTON) {
@@ -119,6 +119,8 @@
             originY: event.movementY
         });
     });
+
+    // on mouse up, end drag and revert cursor back to default variant
     container.addEventListener("mouseup", (event) => {
         document.body.style.cursor = "default"
     });
