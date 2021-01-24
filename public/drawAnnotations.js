@@ -341,8 +341,7 @@ const initDraw = canvas => {
 
         registerNewElement({
             shape: "polygon",
-            id: selectedCategory.id,
-            name: selectedCategory.name,
+            label: selectedCategory.id,
             lines,
             points
         });
