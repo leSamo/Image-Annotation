@@ -3,8 +3,7 @@ document.documentElement.style.setProperty('--annotation-border-width', ANNOTATI
 
 const ALLOWED_SHAPES = ["rectangle", "ellipse", "polygon", "point", "line"];
 
-// setup label .json file importing
-
+// setup label .json file importing, to make file select dialog prettier
 document.getElementById('upload-labels').addEventListener('click', promptUploadLabelFile);
 
 function promptUploadLabelFile() {
@@ -32,7 +31,6 @@ if (labels && labels !== "null") {
 }
 
 if (!folderId || folderId === "null") {
-    //promptNewFolder();
     $("#error-msg").html("Invalid or no folder ID, please use 'New folder' button to enter a new ID.");
 }
 
@@ -41,20 +39,18 @@ function getCookieValue(name) {
     return value ? value.pop() : '';
 }
 
-// request image name, attach folder ID to the request
-$.post("/image", { folderId: folderId },
-    data => {
-        if (data.error) {
-            console.error(data.errorMsg);
-            // show red error text to user
-            $("#error-msg").html(data.errorMsg);
-            $("#error-msg").css("display", "block");
-        } else {
-            imageName = data.name;
-            $('#image').attr('src', `/imageFile?ext=${data.extension}&folderId=${folderId}`);
-            $("#title-text").html(`${imageName}.${data.extension}`);
-        }
-    });
+function showErrorMessage(msg) {
+    $("#error-msg").html(msg);
+    $("#error-msg").css("display", "block");
+}
+
+function setImageName(name, extension) {
+    imageName = name;
+    $("#title-text").html(`${name}.${extension}`);
+}
+
+// API function to download and set image to annotate
+downloadImage(folderId);
 
 // create a button in toolbar for each category 
 function setupLabels(json) {
@@ -124,32 +120,4 @@ function selectCategory(id, name, shape, img_src, hasImage) {
 
     // apply isSelected styling to clicked button
     $(`.toolbar-item[id=${id}]`).css('background-color', 'skyblue');
-}
-
-// when user clicked Submit button send annotation data in JSON format to be uploaded to Google Drive
-const submitAnnotations = () => {
-    let isConfirmed = true;
-
-    if (annotationArray.length === 0) {
-        isConfirmed = window.confirm("Are you sure you want to submit this image without annotations?");
-    }
-
-    if (isConfirmed) {
-        const annotations = JSON.stringify(annotationArray.map(item => ({
-            ...item,
-            element: undefined,
-            lines: undefined
-        })))
-        $.post({
-            url: '/submit',
-            data: {
-                name: imageName,
-                folderId,
-                annotations
-            },
-            success: () => {
-                location.reload();
-            }
-        });
-    }
 }

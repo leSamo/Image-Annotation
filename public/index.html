@@ -26,7 +26,7 @@
         <!-- Top text with image filename -->
         <p id="title-text"></p>
 
-        <button id="submit-btn" onclick="submitAnnotations()" title="Create a .json file with all annotations and upload it to Google Drive (ENTER)">
+        <button id="submit-btn" onclick="uploadAnnotations(annotationArray, folderId, imageName)" title="Create a .json file with all annotations and upload it to Google Drive (ENTER)">
             Submit
         </button>
     </div>
@@ -95,6 +95,7 @@
     <script src="config.js"></script>
     <script src="transformImage.js"></script>
     <script src="drawAnnotations.js"></script>
+    <script src="API.js"></script>
     <script src="index.js"></script>
 </body>
 

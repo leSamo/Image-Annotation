@@ -308,7 +308,7 @@ const initDraw = canvas => {
 
         // submit image with annotations on ENTER press
         if (evtobj.keyCode == 13) {
-            submitAnnotations();
+            uploadAnnotations(annotationArray, folderId, imageName);
         }
 
         // toggle hide/show all miniatures on left ALT
