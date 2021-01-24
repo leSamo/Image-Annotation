@@ -112,7 +112,6 @@ const initDraw = canvas => {
         let newItem = $("#history-item-template").clone();
 
         newItem.css("display", "block");
-        newItem.find(".toolbar-text").html(data.name);
 
         // set gray subtext
         if (data.shape === "rectangle" || data.shape === "ellipse" || data.shape === "point") {
@@ -124,7 +123,10 @@ const initDraw = canvas => {
         }
 
         // set icon
-        newItem.find(".toolbar-img").attr("src", categories.items.find(item => item.id === data.id).img_src);
+        newItem.find(".toolbar-img").attr("src", categories.items.find(item => item.id === data.label).img_src);
+
+        // set text
+        newItem.find(".toolbar-text").html(categories.items.find(item => item.id === data.label).name);
 
         // setup on click handler
         newItem.click(() => selectFromHistory(data, newItem));
@@ -266,8 +268,7 @@ const initDraw = canvas => {
             registerNewElement({
                 shape: selectedCategory.shape,
                 element,
-                id: selectedCategory.id,
-                name: selectedCategory.name,
+                label: selectedCategory.id,
                 ...posInfo
             });
 

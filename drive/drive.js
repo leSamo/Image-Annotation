@@ -10,31 +10,31 @@ const SCOPES = ['https://www.googleapis.com/auth/drive'];
 // path to file with Google API auth token
 const TOKEN_PATH = 'drive/token.json';
 
-function authAndDownload(whenDone, folderId) {
+function authAndDownload(actionCallback, folderId) {
     fs.readFile('drive/credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
 
-        authorize(JSON.parse(content), sharedFolderListFiles, whenDone, folderId);
+        authorize(JSON.parse(content), sharedFolderListFiles, actionCallback, { folderId });
     });
 }
 
-function authAndUpload(whenDone, name, data, folderId) {
+function authAndUpload(actionCallback, filename, uploadData, folderId) {
     fs.readFile('drive/credentials.json', (err, content) => {
         if (err) return console.log('Error loading client secret file:', err);
 
-        authorize(JSON.parse(content), upload, whenDone, folderId, name, data);
+        authorize(JSON.parse(content), upload, actionCallback, { folderId, filename, uploadData });
     });
 }
 
-function authorize(credentials, callback, whenDone, folderId, name, content) {
+function authorize(credentials, authCallback, actionCallback, actionParams) {
     const { client_secret, client_id, redirect_uris } = credentials.installed;
     const oAuth2Client = new google.auth.OAuth2(
         client_id, client_secret, redirect_uris[0]);
 
     fs.readFile(TOKEN_PATH, (err, token) => {
-        if (err) return getAccessToken(oAuth2Client, callback);
+        if (err) return getAccessToken(oAuth2Client, authCallback);
         oAuth2Client.setCredentials(JSON.parse(token));
-        callback(oAuth2Client, whenDone, folderId, name, content);
+        authCallback(oAuth2Client, actionCallback, actionParams);
     });
 }
 
@@ -63,7 +63,7 @@ function getAccessToken(oAuth2Client, callback) {
     });
 }
 
-function sharedFolderListFiles(auth, whenDone, folderId) {
+function sharedFolderListFiles(auth, downloadCallback, { folderId }) {
     const drive = google.drive({ version: 'v3', auth });
 
     drive.files.list({
@@ -73,7 +73,7 @@ function sharedFolderListFiles(auth, whenDone, folderId) {
     }, (err, res) => {
         if (err) console.log("err:", err);
         if (res === undefined) {
-            whenDone(null, null, true, "Invalid or no folder ID, please use 'New folder' button to enter a new ID.");
+            downloadCallback(null, null, true, "Invalid or no folder ID, please use 'New folder' button to enter a new ID.");
             return;
         }
 
@@ -108,17 +108,17 @@ function sharedFolderListFiles(auth, whenDone, folderId) {
 
         if (unannotatedImages.length === 0) {
             console.log("All are annotated");
-            whenDone(null, null, true, "All images from the dataset are already annotated");
+            downloadCallback(null, null, true, "All images from the dataset are already annotated");
             return;
         }
 
         const fileToDownload = unannotatedImages[0];
 
-        download(auth, fileToDownload.image, folderId, fileToDownload.baseName, fileToDownload.image_extension, whenDone);
+        download(auth, fileToDownload.image, folderId, fileToDownload.baseName, fileToDownload.image_extension, downloadCallback);
     });
 }
 
-function download(auth, fileId, folderId, filename, extension, whenDone) {
+function download(auth, fileId, folderId, filename, extension, downloadCallback) {
     const drive = google.drive({ version: 'v3', auth });
 
     const dest = fs.createWriteStream(`public/tmp/${folderId}.${extension}`);
@@ -127,7 +127,7 @@ function download(auth, fileId, folderId, filename, extension, whenDone) {
         .then(res => {
             res.data
                 .on('end', () => {
-                    whenDone(filename, extension);
+                    downloadCallback(filename, extension);
                 })
                 .on('error', err => {
                     console.error('Error downloading file.');
@@ -135,21 +135,22 @@ function download(auth, fileId, folderId, filename, extension, whenDone) {
                 .pipe(dest);
         }, err => {
             console.error(err);
-            whenDone(null, null, true, "Unknown download error");
+            downloadCallback(null, null, true, "Unknown download error");
         });
 }
 
-function upload(auth, whenDone, folderId, name, content) {
+function upload(auth, uploadCallback, { folderId, filename, uploadData }) {
     const drive = google.drive({ version: 'v3', auth });
+
     drive.files.create({
         requestBody: {
-            name: name.split('.')[0] + ".json",
+            name: filename.split('.')[0] + ".json",
             parents: [folderId]
         },
         media: {
-            body: JSON.stringify(content, null, 4),
+            body: JSON.stringify(uploadData, null, 4),
         }
-    }).then(res => whenDone());
+    }).then(res => uploadCallback());
 }
 
 // Expose functions for app.js

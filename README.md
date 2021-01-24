@@ -5,7 +5,7 @@ FIT VUT IP1 project 2020/21
 
 # Server setup
 ## First time setup
-1. Make sure you have [npm](https://www.npmjs.com/) installed (verify installation by running `npm -v`)
+1. Make sure you have [node.js](https://nodejs.org/) installed (verify installation by running `node -v`)
 2. Run `npm install` in root directory
 3. [Enable Google Drive API (only step 1)](https://developers.google.com/drive/api/v3/quickstart/nodejs#step_1_turn_on_the), if you are going to use the server only yourself you can use your own Google account, otherwise I recommend creating a new Google account for this
 4. Put `credentials.json` file from step 1 into `drive` folder, upon starting the server for the first time you will be prompted to authentificate

@@ -49,12 +49,12 @@ app.get('/imageFile', (req, res) => {
     res.sendFile(path.join(__dirname + `/public/tmp/${req.query.folderId}.${req.query.ext}`));
 });
 
-// user clicked on submit button, upload JSON file to server
+// user clicked on submit button, upload JSON file to Google Drive folder
 app.post('/submit', (req, res) => {
     const annotationData = JSON.parse(req.body.annotations);
     const onSuccess = () => res.sendStatus(200);
 
-    drive.upload(() => onSuccess, req.body.name, annotationData, req.body.folderId);
+    drive.upload(onSuccess, req.body.name, annotationData, req.body.folderId);
 });
 
 app.listen(process.env.PORT || 3000, () =>
