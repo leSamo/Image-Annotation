@@ -3,26 +3,26 @@
 
 ![Annotating-GIF](https://s8.gifyu.com/images/ezgif-4-2084a73dd6ea.gif)
 
-[Table of contents]  
+# Table of contents
 1.	[Description](#Description)  
     a.	[Input image data setup](#Input-image-data-setup)  
     b.	[Annotation labels](#Annotation-labels)  
     c.	[Output data](#Output-data)  
     d.	[Browser compatibility](#Browser-compatibility)  
 2.	[Local setup](#Local-setup)  
-    a.	First time setup  
-    b.	Run server  
-    c.	Custom configuration  
+    a.	[First time setup](#First-time-setup)  
+    b.	[Run server](#run-server)  
+    c.	[Custom configuration](#custom-configuration)  
 3.	[Program documentation](#Program-documentation)  
-    a.	Package dependencies  
-    b.	File structure  
-    c.	Server architecture  
-    d.	API endpoints  
-    e.	Client architecture  
-    f.	Client-server communication  
+    a.	[Package dependencies](#Package-dependencies)  
+    b.	[File structure](#File-structure)  
+    c.	[Server architecture](#Server-architecture)  
+    d.	[API endpoints](#API-endpoints)  
+    e.	[Client architecture](#Client-architecture)  
+    f.	[Client-server communication](#Client-server-communication)  
 4.	[Used libraries](#Used-libraries)  
 
-## Description
+# Description
 Image annotation tool for machine learning, capable of importing images and exporting JSON data with annotations to Google Drive. App is built in Node.js on Express framework. It uses Google API to communicate with Google Drive. App is available at https://evening-caverns-09995.herokuapp.com/. In case you want to setup the app locally, follow instructions in local setup chapter below.
 
 ## Input image data setup
@@ -133,7 +133,7 @@ Clicking submit uploads all annotation data to the same Google Drive folder the 
 - Firefox (tested on version 83)
 - Edge (tested on version 87)
 
-## Local setup
+# Local setup
 ## First time setup
 1. Make sure you have [node.js](https://nodejs.org/) installed (verify installation by running `node -v`)
 2. Run `npm install` in root directory
@@ -190,10 +190,12 @@ Image-annotation
 Upon user entering folder ID, server is requested with providing image from Google Drive folder using /image endpoint, server retrieves list of all files inside the folder from Drive API, finds out which images have already been annotated (all annotated images have .json file with the same basename as them), downloads one of them and sends its filename to the client. Client requests image file from the /imageFile endpoint attaching folder id and image name to the request. Note that in the first request the file is not directly downloaded to the client but to the server, from which it is linked in the second request. Clicking submit button collects all annotation data and is sent to server which creates a new file with the same basename as the image with .json prefix to the same Google Drive folder.
 
 ## API Endpoints
-|/           | GET	| Request client page                                                |
-|/image	     | POST	| Send folder id, receive first unannotated image name               |
-|/imageFile	 | GET	| Send folder id and image name, receive image file                  |
-|/submit     | POST	| Send image name, folder id and JSON annotation data to be uploaded |
+| Path       | Method   | Description                                                        |
+|------------|:--------:|--------------------------------------------------------------------|
+|/           | GET  	| Request client page                                                |
+|/image	     | POST  	| Send folder id, receive first unannotated image name               |
+|/imageFile	 | GET  	| Send folder id and image name, receive image file                  |
+|/submit     | POST  	| Send image name, folder id and JSON annotation data to be uploaded |
 
 ![Sequence diagram](https://i.imgur.com/ZcmQRWK.png)
 
@@ -220,14 +222,14 @@ Image container element contains event handlers to respond to mouse wheel scroll
  
 ## Client-server communication
 Client downloads images and uploads JSON data to server using functions `downloadImage` and `uploadAnnotations` defined inside `API.js`. These can be simply altered to use your own image source or upload target. Available helper functions is showErrorMessage(msg). Make sure to call setImageName(filename, extension) to display the name in the header and store it in code. Modify main image element by changing the source attribute of img element with id #image.
-## Used libraries
-### Code for image zoom and pan
+# Used libraries
+## Code for image zoom and pan
 https://medium.com/better-programming/implementation-of-zoom-and-pan-in-69-lines-of-javascript-8b0cb5f221c1
 
-### Rectangle drawing code
+## Rectangle drawing code
 https://stackoverflow.com/questions/17408010/drawing-a-rectangle-using-click-mouse-move-and-click
 http://jsfiddle.net/d9BPz/546/
 
-### Drawing lines (for polygons)
+## Drawing lines (for polygons)
 https://stackoverflow.com/questions/4270485/drawing-lines-on-html-page
 
