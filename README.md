@@ -1,13 +1,14 @@
 # Image Annotation
 ## App available online at https://evening-caverns-09995.herokuapp.com/.
+
 ![Annotating-GIF](https://s8.gifyu.com/images/ezgif-4-2084a73dd6ea.gif)
+
 [Table of contents]  
 1.	[Description](#Description)  
-    a.	Input image data setup  
-    b.	Annotation labels  
-    c.	Navigating the app  
-    d.	Output data  
-    e.	Browser compatibility  
+    a.	[Input image data setup](#Input-image-data-setup)  
+    b.	[Annotation labels](#Annotation-labels)  
+    c.	[Output data](#Output-data)  
+    d.	[Browser compatibility](#Browser-compatibility)  
 2.	[Local setup](#Local-setup)  
     a.	First time setup  
     b.	Run server  
@@ -16,9 +17,9 @@
     a.	Package dependencies  
     b.	File structure  
     c.	Server architecture  
-        i.	API endpoints  
-    d.	Client architecture  
-    e.	Client-server communication  
+    d.	API endpoints  
+    e.	Client architecture  
+    f.	Client-server communication  
 4.	[Used libraries](#Used-libraries)  
 
 ## Description
@@ -188,22 +189,25 @@ Image-annotation
 ## Server architecture 
 Upon user entering folder ID, server is requested with providing image from Google Drive folder using /image endpoint, server retrieves list of all files inside the folder from Drive API, finds out which images have already been annotated (all annotated images have .json file with the same basename as them), downloads one of them and sends its filename to the client. Client requests image file from the /imageFile endpoint attaching folder id and image name to the request. Note that in the first request the file is not directly downloaded to the client but to the server, from which it is linked in the second request. Clicking submit button collects all annotation data and is sent to server which creates a new file with the same basename as the image with .json prefix to the same Google Drive folder.
 
-### API Endpoints
-/	GET	Request client page
-/image	POST	Send folder id, receive first unannotated image name
-/imageFile	GET	Send folder id and image name, receive image file
-/submit	POST	Send image name, folder id and JSON annotation data to be uploaded
+## API Endpoints
+|/           | GET	| Request client page                                                |
+|/image	     | POST	| Send folder id, receive first unannotated image name               |
+|/imageFile	 | GET	| Send folder id and image name, receive image file                  |
+|/submit     | POST	| Send image name, folder id and JSON annotation data to be uploaded |
 
 ![Sequence diagram](https://i.imgur.com/ZcmQRWK.png)
 
  
 ## Client architecture
-Client page consists of multiple panels and image area. When user imports label file, JSON is parser and for each label an item inside left panel is created. Items can be selected on click. Drawing a new annotation shape will use the label which is currently selected. Label also determines annotation shape. Available shapes are:  
+Client page consists of multiple panels and image area. When user imports label file, JSON is parser and for each label an item inside left panel is created. Items can be selected on click. Drawing a new annotation shape will use the label which is currently selected. Label also determines annotation shape.  
+
+Available shapes are:  
 - Rectangle – represented by html div element with border  
 - Ellipse – represented by html div element with border and border-radius 50%  
 - Point – represented by small html div element with border and border-radius 50%  
 - Line – represented by rotated html div element with border and 0 height  
 - Polygon – represented by multiple lines, line drawn first is orange to highlight orientation (for example determining one particular side of a chessboard)  
+
 Drawing a shape registers a new element in `annotationArray` variable and creates a new item in right history panel. History panel reflects contents of `annotationArray`. Item can be clicked on, highlighting it. Pressing delete or backspace key will delete the selected annotation.  
 Deleting an annotation will not delete corresponding HTML element, only hide it by setting its display to none. This allows the annotation to be reverted using undo action.
 For the purpose or undo (CTRL+Z) and redo (CTRL+Y) actions there are two arrays undoBuffer and redoBuffer which keep track of these actions. Each item in the buffer has action type attached (add/remove), annotation metadata and html element bound to the annotation.  
