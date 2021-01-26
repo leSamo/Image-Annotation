@@ -23,7 +23,7 @@
 4.	[Used libraries](#used-libraries)  
 
 # Description
-Image annotation tool for machine learning, capable of importing images and exporting annotations in JSON format to Google Drive. App is built in Node.js on Express framework. It uses Google API to communicate with Google Drive. App is available online at https://evening-caverns-09995.herokuapp.com/. In case you want to setup the app locally, follow instructions in [local setup chapter](#Local-setup) below.
+Image annotation tool for machine learning, capable of importing images and exporting annotations in JSON format to Google Drive. App is built in Node.js on Express framework. It uses Google API to communicate with Google Drive. App is available online at https://evening-caverns-09995.herokuapp.com/. In case you want to setup the app locally, follow instructions in [local setup chapter](#local-setup) below.
 
 ## Input image data setup
 Before using the app, you need to set up a Google Drive folder with the images to annotate.
@@ -143,7 +143,7 @@ Clicking submit uploads all annotation data to the same Google Drive folder the 
 ## Run server
 1. Run `npm start` in root directory
 2. Client page will be accessible at `localhost:3000`
-- to use the client page reffer to the chapter [Description](#Description) above
+- to use the client page reffer to the chapter [Description](#description) above
 - some controls can be remapped/adjusted in `public/config.js` file
 
 ## Custom configuration
