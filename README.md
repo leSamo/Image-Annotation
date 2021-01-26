@@ -1,25 +1,25 @@
 # Image Annotation
 ## App available online at https://evening-caverns-09995.herokuapp.com/.
 ![Annotating-GIF](https://s8.gifyu.com/images/ezgif-4-2084a73dd6ea.gif)
-[Table of contents]
-1.	[Description](#Description)
-    a.	Input image data setup
-    b.	Annotation labels
-    c.	Navigating the app
-    d.	Output data
-    e.	Browser compatibility
-2.	[Local setup](#Local_setup)
-    a.	First time setup
-    b.	Run server
-    c.	Custom configuration
-3.	Program documentation
-    a.	Package dependencies
-    b.	File structure
-    c.	Server architecture
-        i.	API endpoints
-    d.	Client architecture
-    e.	Client-server communication
-4.	Used libraries
+[Table of contents]  
+1.	[Description](#Description)  
+    a.	Input image data setup  
+    b.	Annotation labels  
+    c.	Navigating the app  
+    d.	Output data  
+    e.	Browser compatibility  
+2.	[Local setup](#Local-setup)  
+    a.	First time setup  
+    b.	Run server  
+    c.	Custom configuration  
+3.	[Program documentation](#Program-documentation)  
+    a.	Package dependencies  
+    b.	File structure  
+    c.	Server architecture  
+        i.	API endpoints  
+    d.	Client architecture  
+    e.	Client-server communication  
+4.	[Used libraries](#Used-libraries)  
 
 ## Description
 Image annotation tool for machine learning, capable of importing images and exporting JSON data with annotations to Google Drive. App is built in Node.js on Express framework. It uses Google API to communicate with Google Drive. App is available at https://evening-caverns-09995.herokuapp.com/. In case you want to setup the app locally, follow instructions in local setup chapter below.
@@ -198,18 +198,18 @@ Upon user entering folder ID, server is requested with providing image from Goog
 
  
 ## Client architecture
-Client page consists of multiple panels and image area. When user imports label file, JSON is parser and for each label an item inside left panel is created. Items can be selected on click. Drawing a new annotation shape will use the label which is currently selected. Label also determines annotation shape. Available shapes are:
-•	Rectangle – represented by html div element with border
-•	Ellipse – represented by html div element with border and border-radius 50%
-•	Point – represented by small html div element with border and border-radius 50%
-•	Line – represented by rotated html div element with border and 0 height
-•	Polygon – represented by multiple lines, line drawn first is orange to highlight orientation (for example determining one particular side of a chessboard)
-Drawing a shape registers a new element in `annotationArray` variable and creates a new item in right history panel. History panel reflects contents of `annotationArray`. Item can be clicked on, highlighting it. Pressing delete or backspace key will delete the selected annotation.
+Client page consists of multiple panels and image area. When user imports label file, JSON is parser and for each label an item inside left panel is created. Items can be selected on click. Drawing a new annotation shape will use the label which is currently selected. Label also determines annotation shape. Available shapes are:  
+- Rectangle – represented by html div element with border  
+- Ellipse – represented by html div element with border and border-radius 50%  
+- Point – represented by small html div element with border and border-radius 50%  
+- Line – represented by rotated html div element with border and 0 height  
+- Polygon – represented by multiple lines, line drawn first is orange to highlight orientation (for example determining one particular side of a chessboard)  
+Drawing a shape registers a new element in `annotationArray` variable and creates a new item in right history panel. History panel reflects contents of `annotationArray`. Item can be clicked on, highlighting it. Pressing delete or backspace key will delete the selected annotation.  
 Deleting an annotation will not delete corresponding HTML element, only hide it by setting its display to none. This allows the annotation to be reverted using undo action.
-For the purpose or undo (CTRL+Z) and redo (CTRL+Y) actions there are two arrays undoBuffer and redoBuffer which keep track of these actions. Each item in the buffer has action type attached (add/remove), annotation metadata and html element bound to the annotation.
-Hiding all annotations sets display of html element of every annotation to none, showing annotations sets display back to block.
-Each annotation has either icon or text next to it to show its label. If the label has defined img_src property in imported JSON label file, it uses icon referred to in code as miniature. Otherwise small text with the name of the label is shown, referred to in code as miniature-label.
-Clicking submit button removes html elements bound to annotationArray and converts annotation data to JSON which is sent to server.
+For the purpose or undo (CTRL+Z) and redo (CTRL+Y) actions there are two arrays undoBuffer and redoBuffer which keep track of these actions. Each item in the buffer has action type attached (add/remove), annotation metadata and html element bound to the annotation.  
+Hiding all annotations sets display of html element of every annotation to none, showing annotations sets display back to block.  
+Each annotation has either icon or text next to it to show its label. If the label has defined img_src property in imported JSON label file, it uses icon referred to in code as miniature. Otherwise small text with the name of the label is shown, referred to in code as miniature-label.  
+Clicking submit button removes html elements bound to annotationArray and converts annotation data to JSON which is sent to server.  
 Image container element contains event handlers to respond to mouse wheel scrolling by zooming the image and to respond to dragging with right mouse button to pan the image. Image is moved and zoomed by manipulating its CSS transform properties. HTML elements representing annotations are parented to the image so their position is anchored to the same location on image. Thickness of annotation is invariant to zoom, which means absolute border thickness has to be adjusted to counter relative size of whole shape changing while zooming. Everything connected to image position manipulation is done in the `transformImage.js` file.
 
 ![Client layout](https://i.imgur.com/f2wYghh.png)
