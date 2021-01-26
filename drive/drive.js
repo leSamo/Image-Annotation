@@ -121,6 +121,10 @@ function sharedFolderListFiles(auth, downloadCallback, { folderId }) {
 function download(auth, fileId, folderId, filename, extension, downloadCallback) {
     const drive = google.drive({ version: 'v3', auth });
 
+    if (!fs.existsSync("public/tmp")) {
+        fs.mkdirSync("public/tmp");
+    }
+
     const dest = fs.createWriteStream(`public/tmp/${folderId}.${extension}`);
 
     drive.files.get({ fileId, alt: 'media' }, { responseType: 'stream' })
