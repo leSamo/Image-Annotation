@@ -1,7 +1,7 @@
 # Image Annotation
-## App available online at https://evening-caverns-09995.herokuapp.com/.
 
-![Annotating-GIF](https://s8.gifyu.com/images/ezgif-4-2084a73dd6ea.gif)
+![example screenshot 1](https://github.com/user-attachments/assets/4eb2843b-267e-4501-a536-429663323c54)
+![example screenshot 2](https://github.com/user-attachments/assets/afbdcc05-52e8-439a-aa91-09ea44083c51)
 
 # Table of contents
 1.	[Description](#description)  
@@ -23,7 +23,7 @@
 4.	[Used libraries](#used-libraries)  
 
 # Description
-Image annotation tool for machine learning, capable of importing images and exporting annotations in JSON format to Google Drive. App is built in Node.js on Express framework. It uses Google API to communicate with Google Drive. App is available online at https://evening-caverns-09995.herokuapp.com/. In case you want to setup the app locally, follow instructions in [local setup chapter](#local-setup) below.
+Image annotation tool for machine learning, capable of importing images and exporting annotations in JSON format to Google Drive. App is built in Node.js on Express framework. It uses Google API to communicate with Google Drive. In case you want to setup the app locally, follow instructions in [local setup chapter](#local-setup) below.
 
 ## Input image data setup
 Before using the app, you need to set up a Google Drive folder with the images to annotate.
